@@ -38,6 +38,20 @@ exports.create = async (rl) => {
     rl.log(`   User ${name} creates quiz: ${question} -> ${answer}`);
 }
 
+exports.play = async (rl) => {
+  let id = await rl.questionP("Enter quiz Id");
+  let quiz = await Quiz.findByPk(Number(id));
+  if (!quiz) throw new Error(`  Quiz '${id}' is not in DB`);
+
+  let answered = await rl.questionP(quiz.question);
+
+  if (answered.toLowerCase().trim()===quiz.answer.toLowerCase().trim()) {
+    rl.log(`  The answer "${answered}" is right!`);
+  } else {
+    rl.log(`  The answer "${answered}" is wrong!`);
+  }
+ }
+
 // Test (play) quiz identified by <id>
 exports.test = async (rl) => {
 
@@ -82,4 +96,6 @@ exports.delete = async (rl) => {
   if (n===0) throw new Error(`  ${id} not in DB`);
   rl.log(`  ${id} deleted from DB`);
 }
+
+
 
