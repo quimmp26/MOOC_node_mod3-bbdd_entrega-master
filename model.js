@@ -75,5 +75,11 @@ Scores.init(
   { sequelize }
 );
 
+Scores.belongsTo(User, {
+  as: 'userId', 
+  foreignKey: 'userId', 
+  onDelete: 'CASCADE'
+});
+
 module.exports = sequelize;
 
